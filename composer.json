@@ -15,7 +15,8 @@
   "autoload": {
     "files": [
       "src/Validator.php",
-      "src/StringValidator.php"
+      "src/StringValidator.php",
+      "src/NumberValidator.php"
     ],
     "psr-4": {
       "Php\\Package\\": "src",
