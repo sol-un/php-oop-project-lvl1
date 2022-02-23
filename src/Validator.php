@@ -3,29 +3,12 @@
 namespace Validator;
 
 use Tightenco\Collect\Support\Collection;
+use Validator\StringValidator;
 
 class Validator
 {
-    private Collection $checks;
-
-    public function __construct()
+    public function string(): StringValidator
     {
-        $this->checks = collect([]);
-    }
-
-    public function string(): Validator
-    {
-        $this->checks->push(function ($value) {
-            return gettype($value) === 'string';
-        });
-        
-        return $this;
-    }
-
-    public function isValid($value): Bool
-    {
-        return $this->checks->every(function ($check) use ($value) {
-            return $check($value);
-        });
+        return new StringValidator();
     }
 }
