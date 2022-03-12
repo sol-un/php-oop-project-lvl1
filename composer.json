@@ -16,7 +16,8 @@
     "files": [
       "src/Validator.php",
       "src/StringValidator.php",
-      "src/NumberValidator.php"
+      "src/NumberValidator.php",
+      "src/ArrayValidator.php"
     ],
     "psr-4": {
       "Php\\Package\\": "src",

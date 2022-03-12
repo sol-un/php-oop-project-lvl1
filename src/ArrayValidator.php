@@ -5,46 +5,36 @@ namespace Validator;
 use Tightenco\Collect\Support\Collection;
 use Validator\Validator;
 
-class NumberValidator
+class ArrayValidator
 {
     private Collection $checks;
-    private ?array $range;
+    private ?int $sizeof;
 
     public function __construct()
     {
         $this->checks = collect([function ($value) {
-            return in_array(gettype($value), ['integer', 'NULL']);
+            return in_array(gettype($value), ['array', 'NULL']);
         }]);
-        $this->range = null;
+        $this->sizeof = null;
     }
 
-    public function required(): NumberValidator
+    public function required(): ArrayValidator
     {
         $this->checks->push(function ($value) {
-            return gettype($value) !== 'NULL';
+            return gettype($value) === 'array';
         });
 
         return $this;
     }
 
-    public function positive(): NumberValidator
+    public function sizeof(int $size): ArrayValidator
     {
-        $this->checks->push(function ($value) {
-            return $value > 0;
-        });
-
-        return $this;
-    }
-
-    public function range(int $min, int $max): NumberValidator
-    {
-        $prev = $this->range;
-        $this->range = [$min, $max];
+        $prev = $this->sizeof;
+        $this->sizeof = $size;
 
         if (!$prev) {
             $this->checks->push(function ($value) {
-                [$min, $max] = $this->range;
-                return $min <= $value && $value <= $max;
+                return count($value) >= $this->sizeof;
             });
         }
 

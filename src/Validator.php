@@ -5,6 +5,7 @@ namespace Validator;
 use Tightenco\Collect\Support\Collection;
 use Validator\StringValidator;
 use Validator\NumberValidator;
+use Validator\ArrayValidator;
 
 class Validator
 {
@@ -16,5 +17,10 @@ class Validator
     public function number(): NumberValidator
     {
         return new NumberValidator();
+    }
+
+    public function array(): ArrayValidator
+    {
+        return new ArrayValidator();
     }
 }

@@ -10,7 +10,7 @@ class ValidatorTest extends TestCase
     public function testString(): void
     {
         $v = new Validator();
-        
+
         $schema = $v->string();
         $this->assertTrue($schema->isValid(''));
         $this->assertTrue($schema->isValid(null));
@@ -21,7 +21,7 @@ class ValidatorTest extends TestCase
         $this->assertFalse($schema->isValid(null));
         $this->assertFalse($schema->isValid(''));
         $this->assertFalse($schema->isValid(0));
-        
+
         $schema2 = $v->string();
         $this->assertTrue($schema2->isValid(''));
         $this->assertTrue($schema2->isValid(null));
@@ -33,7 +33,7 @@ class ValidatorTest extends TestCase
     public function testNumber(): void
     {
         $v = new Validator();
-        
+
         $schema = $v->number();
         $this->assertTrue($schema->isValid(null));
         $schema->required();
@@ -45,5 +45,23 @@ class ValidatorTest extends TestCase
         $schema2->range(-5, 5);
         $this->assertTrue($schema->isValid(5));
         $this->assertFalse($schema->isValid(-3));
+    }
+
+    public function testArray(): void
+    {
+        $v = new Validator();
+
+        $schema = $v->array();
+        $this->assertTrue($schema->isValid(null));
+        
+        $schema->required();
+        $this->assertTrue($schema->isValid([]));
+        $this->assertTrue($schema->isValid(['hexlet']));
+        $this->assertFalse($schema->isValid(null));
+        $this->assertFalse($schema->isValid(0));
+        
+        $schema->sizeof(2);
+        $this->assertFalse($schema->isValid(['hexlet']));
+        $this->assertTrue($schema->isValid(['hexlet', 'code-basics']));
     }
 }
