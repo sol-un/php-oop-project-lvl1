@@ -30,7 +30,7 @@ class NumberValidator
     public function positive(): NumberValidator
     {
         $this->checks->push(function ($value) {
-            return $value > 0;
+            return $value > 0 || $value === null;
         });
 
         return $this;
